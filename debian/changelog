@@ -1,0 +1,76 @@
+ros-lyrical-sick-safetyscanners-base (2.0.0-1trixie) trixie; urgency=high
+
+  * Added compatibility with Boost 1.90:
+    * Migrated Asio usage from ``io_service`` to ``io_context`` and replacedthe removed work object with executor_work_guard. Preserved the
+    sick::io_service_ptr alias and protected m_io_service member
+    for source compatibility.
+    
+      * Migrated deadline handling to ``steady_timer`` while preserving the
+        public Boost.PosixTime timeout API. Clipping timeouts outside the
+        steady-clock range to new valid range to prevent integer overflow.
+      * Updated IPv4 address conversions and Boost/CMake dependency handling.
+      * Updated the installed CMake package and dependency metadata for header-only
+        Boost.System.
+      * CMake CMP0167 support
+    
+  * Removed legacy Gitlab CI config.
+  * NOTICE: New minimum required CMake version is 3.10
+  * NOTICE: Downstream binaries must be rebuilt because class layouts changed.
+  * Contributors: Alexander Moriarty, Barron Rulon, Christian Eichmann
+
+ -- "Christian Eichmann" <eichmann@fzi.de>  Mon, 16 Nov 2026 23:00:00 -0000
+
+ros-lyrical-sick-safetyscanners-base (1.0.5-1trixie) trixie; urgency=high
+
+  * Added check for correct Header size in UDP and TCP communication
+  * Added throw for error handling on failed packages in the synchronized UDP receive
+  * Added try/catch block in examples in README to reflect this change
+  * Contributors: Christian Eichmann, Thomas Trapp
+
+ -- "Christian Eichmann" <eichmann@fzi.de>  Mon, 05 Oct 2026 22:00:00 -0000
+
+ros-lyrical-sick-safetyscanners-base (1.0.4-1trixie) trixie; urgency=high
+
+  * Added support for missing I/O scanners and EtherCAT type codes
+  * Setting C++14 as target property
+  * Fixing warnings for Wpedantic build
+  * Adding clang-format file and formatting changes
+  * Contributors: Christian Eichmann, jncfa-kin
+
+ -- "Christian Eichmann" <eichmann@fzi.de>  Wed, 12 Aug 2026 22:00:00 -0000
+
+ros-lyrical-sick-safetyscanners-base (1.0.3-1trixie) trixie; urgency=high
+
+  * Adding missing includes for ubuntu24 compiler
+  * Adding dependencies on specific boost libraries, exporting dep to chrono
+  * Fix Sync example
+  * Fix read checksums
+  * UDPPacketMerger: fixing missing include
+  * Contributors: Carl Morgan, Denis Taniguchi, Lennart Puck, Marco Bassa, Matthias Schoepfer, Rein Appeldoorn, Soren Holm, 张天宇
+
+ -- "Lennart Puck" <puck@fzi.de>  Mon, 19 Aug 2024 22:00:00 -0000
+
+ros-lyrical-sick-safetyscanners-base (1.0.2-1trixie) trixie; urgency=high
+
+  * Added missing 'using' statement to UDPClient.cpp
+  * Contributors: Lennart Puck, crown-bdee
+
+ -- "Lennart Puck" <puck@fzi.de>  Mon, 18 Jul 2022 22:00:00 -0000
+
+ros-lyrical-sick-safetyscanners-base (1.0.1-1trixie) trixie; urgency=high
+
+  * Merge fix for memory leak in command execution
+  * Fix memory leak in createAndExecuteCommand
+  * Adding multicast functionality
+  * Merge constant setting of field angles
+  * Contributors: Andrew Kooiman, Lennart Puck
+
+ -- "Lennart Puck" <puck@fzi.de>  Tue, 21 Dec 2021 23:00:00 -0000
+
+ros-lyrical-sick-safetyscanners-base (1.0.0-1trixie) trixie; urgency=high
+
+  * Initial Release
+
+ -- "Lennart Puck" <puck@fzi.de>  Sun, 10 Jan 2021 23:00:00 -0000
+
+
