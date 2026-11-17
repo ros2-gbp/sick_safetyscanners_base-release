@@ -1,15 +1,12 @@
-cmake_minimum_required(VERSION 3.5) 
+cmake_minimum_required(VERSION 3.10)
 project(sick_safetyscanners_base CXX)
 
-## Use C++11
-#add_definitions(-std=c++11 -Wall)
-## By adding -Wall and -Werror, the compiler does not ignore warnings anymore,
-## enforcing cleaner code.
-add_definitions(-std=c++11 -Wall -Werror)
-
+if(POLICY CMP0167)
+  cmake_policy(SET CMP0167 NEW)
+endif()
 
 ## Find system libraries
-find_package(Boost REQUIRED COMPONENTS system thread chrono)
+find_package(Boost REQUIRED COMPONENTS thread chrono)
 
 
 ###########
@@ -117,8 +114,13 @@ add_library(sick_safetyscanners_base SHARED
   src/datastructure/UserName.cpp
 )
 
+set_target_properties(sick_safetyscanners_base PROPERTIES
+  CXX_STANDARD 14
+  CXX_STANDARD_REQUIRED OFF
+  CXX_EXTENSIONS OFF
+)
+
 target_compile_options(sick_safetyscanners_base
-  PUBLIC ${CXX11_FLAG}
   PRIVATE -Wall)
 
 option(USE_ROS_LOGGING "Use ROS Logging instead of printf" OFF)
@@ -131,10 +133,11 @@ endif()
 target_include_directories(sick_safetyscanners_base PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
-  ${Boost_INCLUDE_DIR}
-  )
+)
 
-target_link_libraries(sick_safetyscanners_base PUBLIC ${Boost_LIBRARIES}
+target_link_libraries(sick_safetyscanners_base PUBLIC
+  Boost::thread
+  Boost::chrono
 )
 
 add_library(sick_safetyscanners_base::sick_safetyscanners_base ALIAS sick_safetyscanners_base)
@@ -158,19 +161,19 @@ install(
   DESTINATION lib/cmake/sick_safetyscanners_base
   FILE sick_safetyscanners_baseTargets.cmake
   NAMESPACE sick_safetyscanners_base::
-  )
+)
 
 # Mark cpp header files for installation
 install(
   DIRECTORY include/${PROJECT_NAME}/
   DESTINATION include/${PROJECT_NAME}
-  FILES_MATCHING 
+  FILES_MATCHING
   PATTERN "*.h"
   PATTERN "*.hpp"
 )
 
 include(CMakePackageConfigHelpers)
-write_basic_package_version_file(sick_safetyscanners_baseConfigVersion.cmake VERSION 1.0.0
+write_basic_package_version_file(sick_safetyscanners_baseConfigVersion.cmake VERSION 2.0.0
   COMPATIBILITY SameMajorVersion)
 
 install(FILES sick_safetyscanners_baseConfig.cmake
